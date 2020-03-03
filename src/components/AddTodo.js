@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
 
 class AddTodo extends Component {
+  state = {
+    title: ''
+  }
+
+  // e.target.value will get whatever we type into the text box
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.addTodo(this.state.title);
+    // Clear the field
+    this.setState({ title: ''})
+  }
+
   render() {
     return (
-      <form style={{display: 'flex'}}>
+      <form onSubmit={this.onSubmit} style={{display: 'flex'}}>
         <input type="text"
         name="title"
         style={{flex: '10', padding: '5px'}}
         placeholder="Add Todo ..."
+        value={this.state.title}
+        onChange={this.onChange}
         />
         <input
           type="submit"
